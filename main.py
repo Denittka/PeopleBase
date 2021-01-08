@@ -72,11 +72,17 @@ def parse(command):
         if len(command) < 3:
             return "Мало аргументов"
         if command[1] == "user":
-            del people[people.index(list(filter(lambda x: x["Name"] == command[2], people))[0])]
+            try:
+                del people[people.index(list(filter(lambda x: x["Name"] == command[2], people))[0])]
+            except IndexError:
+                return "Не найден"
         if command[1] == "fact":
             if len(command) < 4:
                 return "Мало аргументов"
-            person = people.index(list(filter(lambda x: x["Name"] == command[2], people))[0])
+            try:
+                person = people.index(list(filter(lambda x: x["Name"] == command[2], people))[0])
+            except IndexError:
+                return "Не найден"
             try:
                 fact = int(command[3])
             except ValueError:
