@@ -85,6 +85,43 @@ def parse(command):
                 return "Нет такого факта"
             del people[person]["Data"][fact - 1]
             return "Deleted"
+    elif command[0] == "search":
+        age, name, city = False, False, False
+        if "age" in command:
+            age = command.index("age")
+        if "name" in command:
+            name = command.index("name")
+        if "city" in command:
+            city = command.index("city")
+        got = people.copy()
+        if age:
+            got = list(filter(lambda x: x["Age"] == command[age + 1], got))
+        if name:
+            got = list(filter(lambda x: x["Name"] == command[name + 1], got))
+        if city:
+            got = list(filter(lambda x: x["City"] == command[city + 1], got))
+        for person in got:
+            print("-------------------------------------------------")
+            print(f"Name: {person['Name']}")
+            print(f"Age: {person['Age']}")
+            print(f"City: {person['City']}")
+            for num, fact in enumerate(person["Data"]):
+                if len(fact) == 0:
+                    continue
+                print(num + 1, end=". ")
+                i = 0
+                while True:
+                    print(fact[i], end="")
+                    i += 1
+                    if i == 49:
+                        print()
+                    if i == len(fact):
+                        print()
+                        break
+            print("-------------------------------------------------")
+        print(f"Total: {len(got)}")
+    else:
+        return "Команда не найдена"
 
 
 def add_fact(person):
